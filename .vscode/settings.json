@@ -22,6 +22,5 @@
 		}
 	],
 	"eslint.autoFixOnSave": true,
-	"files.eol": "\n",
-	"typescript.validate.enable": false
+	"files.eol": "\n"
 }

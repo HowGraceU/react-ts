@@ -2,6 +2,7 @@ const {
   resolve,
 } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 const argv = require('yargs-parser')(process.argv.slice(2));
 
 const _mode = argv.mode || 'development';
@@ -34,7 +35,7 @@ module.exports = {
         use: [{
           loader: 'eslint-loader',
           options: {
-            formatter: require('eslint-friendly-formatter'),
+            formatter: eslintFriendlyFormatter,
             emitWarning: true,
           },
         }],

@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import * as styles from './index.css';
+import {
+  BrowserRouter as Router, Route, Switch, Link,
+} from 'react-router-dom';
 
-function testable(target: any) {
-  const theTarget = target;
-  theTarget.isTestable = true;
-}
+import TypesTest from './component/types-test';
 
-@testable
-class MyTestableClass {
-  static isTestable = false;
-}
-
-const App = function App() {
-  const a: number = 111;
-
+function App() {
   return (
-    <>
-      <div>{MyTestableClass?.isTestable?.toString()}</div>
-      <div className={styles.fzBlue}>{a}</div>
-    </>
+    <React.StrictMode>
+      <Router>
+        <div>
+          <Header />
+
+          <div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Switch>
+                <Route exact path="/" component={TypesTest} />
+              </Switch>
+            </Suspense>
+          </div>
+        </div>
+      </Router>
+    </React.StrictMode>
   );
-};
+}
+
+function Header() {
+  return (
+    <ul>
+      <li><Link to="/">TypesTest</Link></li>
+    </ul>
+  );
+}
 
 
 ReactDOM.render(<App />, document.getElementById('app'));

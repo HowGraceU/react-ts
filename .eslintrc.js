@@ -10,23 +10,29 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: 'babel-eslint',
-  // parser: '@typescript-eslint/parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      legacyDecorators: true,
       jsx: true,
     },
     ecmaVersion: 11,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: [
     'react',
     '@typescript-eslint',
   ],
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: './webpack.config.js',
+      },
+    },
+  },
   rules: {
     "react/jsx-filename-extension": [1, {
       "extensions": [".tsx", ".jsx", "ts"]
     }],
+    "react/static-property-placement": [0]
   },
 };
