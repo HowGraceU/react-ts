@@ -1,0 +1,12 @@
+.chartLabel {
+	display: inline-block;
+	width: 100px;
+}
+
+.chartProgress {
+	width: 300px;
+}
+
+.transition {
+	transition: transform .15s;
+}

@@ -22,6 +22,14 @@
 				"loose": true
 			}
 		],
-		"@babel/plugin-proposal-optional-chaining"
+		"@babel/plugin-proposal-optional-chaining",
+		[
+			"import",
+			{
+				"libraryName": "antd",
+				"libraryDirectory": "es",
+				"style": "css" // `style: true` 会加载 less 文件
+			}
+		]
 	]
 }

@@ -1,0 +1,25 @@
+.diglogWrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	background: #00000066;
+}
+
+.diglog {
+	display: table;
+	border-radius: 10px;
+	width: 20%;
+	height: 20%;
+	background: white;
+	text-align: center;
+}
+
+.diglogContent {
+	display: table-cell;
+	vertical-align: middle;
+}

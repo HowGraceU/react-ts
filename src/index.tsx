@@ -5,6 +5,8 @@ import {
 } from 'react-router-dom';
 
 import TypesTest from './component/types-test';
+import WebAnimation from './component/web-animation';
+import DynamicCharts from './component/dynamic-charts';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 <Route exact path="/" component={TypesTest} />
+                <Route exact path="/web-animation" component={WebAnimation} />
+                <Route exact path="/dynamic-charts" component={DynamicCharts} />
               </Switch>
             </Suspense>
           </div>
@@ -30,6 +34,8 @@ function Header() {
   return (
     <ul>
       <li><Link to="/">TypesTest</Link></li>
+      <li><Link to="/web-animation">WebAnimation</Link></li>
+      <li><Link to="/dynamic-charts">DynamicCharts</Link></li>
     </ul>
   );
 }

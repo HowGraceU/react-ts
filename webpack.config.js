@@ -3,6 +3,7 @@ const {
 } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const eslintFriendlyFormatter = require('eslint-friendly-formatter');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const argv = require('yargs-parser')(process.argv.slice(2));
 
 const _mode = argv.mode || 'development';
@@ -62,6 +63,15 @@ module.exports = {
             },
           },
           'postcss-loader',
+          {
+            loader: 'global-css-module-loader', // './config/loaders/global-css-module-loader.js'
+            // 添加入全局的css url
+            options: {
+              globalCssPath: [
+                resolve('node_modules'),
+              ],
+            },
+          },
           'typed-css-modules-loader',
         ],
       },
@@ -71,9 +81,16 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: resolve('public/index.html'),
     }),
+    // new BundleAnalyzerPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
+  resolveLoader: {
+    modules: [
+      'node_modules',
+      resolve('loaders'),
+    ],
   },
   devServer: {
     host: 'localhost',
