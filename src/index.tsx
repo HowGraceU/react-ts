@@ -7,6 +7,7 @@ import {
 import TypesTest from './component/types-test';
 import WebAnimation from './component/web-animation';
 import DynamicCharts from './component/dynamic-charts';
+import HooxTest from './component/hoox-test';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 <Route exact path="/" component={TypesTest} />
                 <Route exact path="/web-animation" component={WebAnimation} />
                 <Route exact path="/dynamic-charts" component={DynamicCharts} />
+                <Route exact path="/hoox" component={HooxTest} />
               </Switch>
             </Suspense>
           </div>
@@ -36,6 +38,7 @@ function Header() {
       <li><Link to="/">TypesTest</Link></li>
       <li><Link to="/web-animation">WebAnimation</Link></li>
       <li><Link to="/dynamic-charts">DynamicCharts</Link></li>
+      <li><Link to="/hoox">hoox</Link></li>
     </ul>
   );
 }
