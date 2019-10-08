@@ -34,6 +34,9 @@ module.exports = {
       "extensions": [".tsx", ".jsx", "ts"]
     }],
     "react/static-property-placement": [0],
-    "max-len": [0]
+    "max-len": [0],
+    "react/jsx-props-no-spreading": [2, {
+      "exceptions": ["Component"]
+    }]
   },
 };

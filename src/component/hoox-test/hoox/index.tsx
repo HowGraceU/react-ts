@@ -1,4 +1,6 @@
-import React, { createContext, ReactNode } from 'react';
+import React, {
+  createContext, useState, useMemo, useContext,
+} from 'react';
 
 interface Hoox<State> {
   getHoox: () => State
@@ -6,9 +8,9 @@ interface Hoox<State> {
   resetHoox: Dispatch<State>
   useHoox: StateOperator<State>
   createContainer: (
-    Component: React.FunctionComponent<{}>,
+    Component: React.FC,
     initialState?: State
-  ) => <Props = {}>(props: Props) => JSX.Element
+  ) => React.FC
   Provider: (props: ProviderProps<State>) => JSX.Element
 }
 
@@ -24,18 +26,60 @@ type StateOperator<State> = () => [State, Patch<State>, Dispatch<State>];
 
 export interface ProviderProps<State> {
   initialState?: State
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export default function createHoox<State>(state: State): Hoox<State> {
-  const a = createContext({});
+  const StateContext = createContext(state);
+  let stateRef: State;
+  const getHoox = () => stateRef;
+  let setHoox: Patch<State>;
+  let resetHoox: Dispatch<State>;
+
+  function Provider({ initialState = {} as State, children }: ProviderProps<State>): JSX.Element {
+    const [hooxState, setState] = useState({
+      ...state,
+      ...initialState,
+    });
+
+    stateRef = hooxState;
+
+    // init setHoox and resetHoox
+    useMemo(() => {
+      setHoox = (patch) => setState((prevState) => ({
+        ...prevState,
+        ...(patch instanceof Function ? patch(prevState) : patch),
+      }));
+
+      resetHoox = setState;
+    }, []);
+
+    return (
+      <StateContext.Provider value={hooxState}>
+        {children}
+      </StateContext.Provider>
+    );
+  }
+
+  function createContainer(Component: React.FC, initialState?: State) {
+    return function HookStoreContainer<Props = {}>(props: Props) {
+      return (
+        <Provider initialState={initialState}>
+          <Component {...props} />
+        </Provider>
+      );
+    };
+  }
 
   return {
-    getHoox: () => state,
-    setHoox: () => { },
-    resetHoox: () => { },
-    useHoox: () => [state, () => { }, () => { }],
-    createContainer: () => () => <div />,
-    Provider: () => <a.Provider value={{}} />,
+    getHoox,
+    setHoox: (newState) => setHoox(newState),
+    resetHoox: (newState) => resetHoox(newState),
+    useHoox: () => {
+      const hooxState = useContext(StateContext);
+      return [hooxState, setHoox, resetHoox];
+    },
+    createContainer,
+    Provider,
   };
 }

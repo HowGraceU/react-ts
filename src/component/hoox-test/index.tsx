@@ -1,25 +1,39 @@
 import * as React from 'react';
-import createHoox from './hoox';
+import { Button } from 'antd';
 
-const state = {
-  count: 1,
-};
-
-export const {
-  getHoox,
+import {
+  // getHoox,
   useHoox,
-  setHoox,
-  resetHoox,
-  createContainer,
+  // setHoox,
+  // resetHoox,
+  // createContainer,
   Provider,
-} = createHoox(state);
+} from './store';
 
-function App(): JSX.Element {
+
+function Child(): JSX.Element {
+  const [hoox, setHoox] = useHoox();
+
   return (
     <>
-      <div>123</div>
+      <ShowCount />
+      <Button type="primary" onClick={() => setHoox({ count: hoox.count + 1 })}>+</Button>
     </>
   );
 }
 
-export default App;
+function ShowCount(): JSX.Element {
+  const [{ count }] = useHoox();
+
+  return <div>{count}</div>;
+}
+
+function HooxTest(): JSX.Element {
+  return (
+    <Provider>
+      <Child />
+    </Provider>
+  );
+}
+
+export default HooxTest;
